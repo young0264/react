@@ -6,8 +6,6 @@ const DiaryEditor = () => {
         author: "",
         content: "",
     })
-    // const [author, setAuthor] = useState("");
-    // const [content, setContent] = useState("내용을 입력해주세요.");
 
     return (
         <div className="DiaryEditor">
@@ -15,12 +13,20 @@ const DiaryEditor = () => {
             <div>
                 <input value={state.author} 
                 onChange={(e)=>{
-                    setState(e.target.value);
+                    setState({
+                        author: e.target.value,
+                        // content: state.content, //꼭 두개를 다 넣어줘야하나 => spread 연산자 사용
+                        ...state
+                    });
                 }} />
             </div>
             <div>
                 <textarea value={state.content} onChange={(e) =>{
-                    setState(e.target.value);
+                    setState({
+                        // author: state.author,
+                        ...state,
+                        content: e.target.value,
+                    });
                     console.log(e.target.value);
                 }} />
             </div>
