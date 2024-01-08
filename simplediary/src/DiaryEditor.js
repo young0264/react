@@ -5,30 +5,50 @@ const DiaryEditor = () => {
     const [state, setState] = useState({
         author: "",
         content: "",
-    })
+        emotion:2,
+    });
+
+    const handleChangeState = (e) => {
+        console.log(e.target.name);
+        console.log(e.target.value);
+        setState({
+            ...state,
+            [e.target.name]:e.target.value,
+        })
+    }
+
+    const handleSubmit = () => {
+        alert("저장성공");
+        console.log(state);
+    }
 
     return (
         <div className="DiaryEditor">
             <h1>오늘의 일기</h1>
             <div>
-                <input value={state.author} 
-                onChange={(e)=>{
-                    setState({
-                        author: e.target.value,
-                        // content: state.content, //꼭 두개를 다 넣어줘야하나 => spread 연산자 사용
-                        ...state
-                    });
-                }} />
+                <input 
+                name="author"
+                value={state.author} 
+                onChange={handleChangeState} 
+                />
             </div>
             <div>
-                <textarea value={state.content} onChange={(e) =>{
-                    setState({
-                        // author: state.author,
-                        ...state,
-                        content: e.target.value,
-                    });
-                    console.log(e.target.value);
-                }} />
+                <textarea 
+                name="content"
+                value={state.content} 
+                onChange={handleChangeState} />
+            </div>
+            <div>
+                <select name="emotion" value={state.emotion} onChange={handleChangeState}>
+                    <option value={1}>1</option>
+                    <option value={2}>2</option>
+                    <option value={3}>3</option>
+                    <option value={4}>4</option>
+                    <option value={5}>5</option>
+                </select>
+            </div>
+            <div>
+                <button onClick={handleSubmit}>일기 저장하기</button>
             </div>
         </div>  
     );
