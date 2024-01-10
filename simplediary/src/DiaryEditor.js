@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 
-const DiaryEditor = () => {
+const DiaryEditor = ({onCreate}) => {
 
     const authorInput = useRef();
     const contentsInput = useRef();
@@ -11,8 +11,8 @@ const DiaryEditor = () => {
     });
 
     const handleChangeState = (e) => {
-        console.log(e.target.name);
-        console.log(e.target.value);
+        // console.log(e.target.name);
+        // console.log(e.target.value);
         setState({
             ...state,
             [e.target.name]:e.target.value,
@@ -21,7 +21,7 @@ const DiaryEditor = () => {
 
     const handleSubmit = () => {
         if(state.author.length < 1){
-            // alert("작성자는 최소한 한글자를 입력해주세요.");
+            alert("작성자는 최소한 한글자를 입력해주세요.");
 
             //focus
             authorInput.current.focus();
@@ -29,14 +29,22 @@ const DiaryEditor = () => {
             return;
         }
         if(state.content.length < 5){
-            // alert("일기 본문은 최소 5글자 이상 입력해주세요.");
+            alert("일기 본문은 최소 5글자 이상 입력해주세요.");
 
             //focus
             contentsInput.current.focus();
             return;
         }
+        
+        onCreate(state.author, state.content, state.emotion);
+        // console.log(state);
         alert("저장성공");
-    }
+        setState({
+            author: "",
+            content: "",
+            emotion:1,
+        })
+    };
 
     return (
         <div className="DiaryEditor">
